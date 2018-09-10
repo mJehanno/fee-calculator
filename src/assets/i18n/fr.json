@@ -1,0 +1,15 @@
+{
+  "PAGES": {
+    "HOME": {
+      "TITLE": "Fee Calculator"
+    },
+    "FORM": {
+      "SELECT-DEBIT": "Débit",
+      "SELECT-CREDIT": "Crédit",
+      "LABEL": "Libellé",
+      "AMOUNT": "Montant",
+      "TYPE": "Type",
+      "AMOUNT-ERROR": "Montant Invalid"
+    }
+  }
+}

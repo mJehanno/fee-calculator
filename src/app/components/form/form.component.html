@@ -1,0 +1,24 @@
+<div class="container">
+  <form [formGroup]="feeForm" (ngSubmit)="addFee()">
+    <mat-form-field>
+      <input matInput id='label' formControlName="label" placeholder="{{'PAGES.FORM.LABEL' | translate}}">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput id="cost" formControlName="amount" type="number" min="0" placeholder="{{'PAGES.FORM.AMOUNT' | translate}}"
+        step="0.01">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="type" placeholder="{{'PAGES.FORM.TYPE' | translate}}">
+        <mat-option value="debit">
+          {{'PAGES.FORM.SELECT-DEBIT' | translate}}
+        </mat-option>
+        <mat-option value="credit">
+          {{'PAGES.FORM.SELECT-CREDIT' | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button type="submit" mat-fab color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
+</div>

@@ -3,7 +3,14 @@ import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatFormFieldModule, MatInputModule,
+  MatSelectModule, MatOptionModule,
+  MatButtonModule, MatIconModule,
+  MatDividerModule, MatTableModule,
+  MatSnackBarModule
+} from '@angular/material';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -19,6 +26,9 @@ import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { FormComponent } from './components/form/form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListComponent } from './components/list/list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -29,11 +39,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective
+    WebviewDirective,
+    FormComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     TranslateModule.forRoot({
@@ -42,7 +55,17 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatTableModule,
+    MatSnackBarModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

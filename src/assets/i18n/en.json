@@ -1,7 +1,15 @@
 {
-  "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
-      }
-  }
+    "PAGES": {
+        "HOME": {
+            "TITLE": "Fee Calculator"
+        },
+        "FORM": {
+            "SELECT-DEBIT": "Debit",
+            "SELECT-CREDIT": "Credit",
+            "LABEL": "Label",
+            "AMOUNT": "Amount",
+            "TYPE": "Type",
+            "AMOUNT-ERROR": "Invalid Amount"
+        }
+    }
 }
