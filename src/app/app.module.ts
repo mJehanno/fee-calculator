@@ -29,6 +29,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FormComponent } from './components/form/form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
+import { StoreModule } from '@ngrx/store';
+import { transactionReducer, initialState } from './+state/transaction-reducer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -65,7 +67,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatDividerModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    StoreModule.forRoot({}, {}),
+    StoreModule.forFeature('transactions', transactionReducer, { initialState: initialState })
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

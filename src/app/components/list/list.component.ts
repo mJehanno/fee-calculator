@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Transaction } from '../../model/Transaction';
+import { Observable } from 'rxjs';
+import { TransactionState } from '../../+state/transaction-reducer';
+
+import { transactionQuery } from '../../+state/transaction-selector';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-list',
@@ -7,39 +14,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  transactions: any[] = [];
-
+  transactions: Transaction[] = [];
+  test: Observable<Transaction[]>;
+  dataSource: MatTableDataSource<Transaction>;
   displayColumns = ['Label', 'Type', 'Amount'];
 
-  constructor() { }
-
-  ngOnInit() {
-    this.getFees();
+  constructor(private store: Store<TransactionState>, private changeDetectorRefs: ChangeDetectorRef) {
+    this.transactions = [];
+    this.test = store.pipe(select(transactionQuery.getTransactions));
   }
 
-  getFees() {
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      console.log(key);
-      const value = JSON.parse(localStorage.getItem(key));
-      this.transactions.push({
-        label: key,
-        amount: value.amount,
-        type: value.type
-      });
-    }
+  ngOnInit() {
   }
 
   calculamount() {
-    const credit = this.transactions.filter(transaction =>
-      transaction.type === 'credit'
-    );
-    const debit = this.transactions.filter(transaction =>
-      transaction.type === 'debit'
-    );
-    const totalCredit = credit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
-    const totalDebit = debit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
-    return totalCredit - totalDebit;
-  }
+    if (this.transactions.length !== 0) {
+      const credit = this.transactions.filter(transaction =>
+        transaction.type === 'credit'
+      );
+      const debit = this.transactions.filter(transaction =>
+        transaction.type === 'debit'
+      );
+      const totalCredit = credit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+      const totalDebit = debit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+      return totalCredit - totalDebit;
+    } else {
+      return 0;
+    }
 
+  }
 }

@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+<table mat-table [dataSource]="test |async" class="mat-elevation-z8">
 
   <ng-container matColumnDef="Label">
     <th mat-header-cell *matHeaderCellDef>{{'PAGES.FORM.LABEL' | translate}}</th>

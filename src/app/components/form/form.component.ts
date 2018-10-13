@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { ListService } from '../../services/list/list.service';
+import { Store } from '@ngrx/store';
+import { AddTransaction } from '../../+state/transaction-action';
+import { TransactionState } from '../../+state/transaction-reducer';
 
 @Component({
   selector: 'app-form',
@@ -10,7 +12,10 @@ import { ListService } from '../../services/list/list.service';
 })
 export class FormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, public snackbar: MatSnackBar, private listService: ListService) { }
+
+  constructor(private fb: FormBuilder, public snackbar: MatSnackBar, private store: Store<TransactionState>) {
+
+  }
 
   @Input()
   errorMessage: string;
@@ -29,7 +34,7 @@ export class FormComponent implements OnInit {
       this.snackbar.open(this.errorMessage, 'Undo');
     } else {
       localStorage.setItem(this.feeForm.value.label, JSON.stringify({ amount: this.feeForm.value.amount, type: this.feeForm.value.type }));
-      this.listService.transactions.push(this.feeForm.value);
+      this.store.dispatch(new AddTransaction(this.feeForm.value));
     }
   }
 
