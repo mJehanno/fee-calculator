@@ -1,14 +1,14 @@
 <div class="container">
   <form [formGroup]="feeForm" (ngSubmit)="addFee()">
     <mat-form-field>
-      <input matInput id='label' formControlName="label" placeholder="{{'PAGES.FORM.LABEL' | translate}}">
+      <input matInput id='label' formControlName="label" placeholder="{{'PAGES.FORM.LABEL' | translate}}" required>
     </mat-form-field>
     <mat-form-field>
       <input matInput id="cost" formControlName="amount" type="number" min="0" placeholder="{{'PAGES.FORM.AMOUNT' | translate}}"
-        step="0.01">
+        step="0.01" required>
     </mat-form-field>
     <mat-form-field>
-      <mat-select formControlName="type" placeholder="{{'PAGES.FORM.TYPE' | translate}}">
+      <mat-select formControlName="type" placeholder="{{'PAGES.FORM.TYPE' | translate}}" required>
         <mat-option value="debit">
           {{'PAGES.FORM.SELECT-DEBIT' | translate}}
         </mat-option>

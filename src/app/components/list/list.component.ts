@@ -19,9 +19,11 @@ export class ListComponent implements OnInit {
   dataSource: MatTableDataSource<Transaction>;
   displayColumns = ['Label', 'Type', 'Amount'];
 
-  constructor(private store: Store<TransactionState>, private changeDetectorRefs: ChangeDetectorRef) {
-    this.transactions = [];
+  constructor(private store: Store<TransactionState>) {
     this.test = store.pipe(select(transactionQuery.getTransactions));
+    this.test.subscribe((transactions) => {
+      this.transactions = transactions;
+    });
   }
 
   ngOnInit() {

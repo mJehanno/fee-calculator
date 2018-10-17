@@ -47,10 +47,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
+    StoreModule.forRoot({}, {}),
+    StoreModule.forFeature('transaction', transactionReducer, { initialState: initialState }),
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -68,8 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDividerModule,
     MatTableModule,
     MatSnackBarModule,
-    StoreModule.forRoot({}, {}),
-    StoreModule.forFeature('transactions', transactionReducer, { initialState: initialState })
+
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

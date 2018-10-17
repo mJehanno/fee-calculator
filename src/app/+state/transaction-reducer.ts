@@ -9,17 +9,17 @@ export interface TransactionState {
 
 
 export const initialState: TransactionState = {
-  transaction: []
+  transaction: <Transaction[]>[]
 };
 
 
-export function transactionReducer(state = initialState, action: TransactionActions) {
+export function transactionReducer(state = initialState, action: TransactionActions): TransactionState {
   switch (action.type) {
     case TransactionsActionTypes.AddTransaction:
-      state.transaction.push({ ...action.transaction });
-      console.log(state.transaction);
       return {
-        ...state, transaction: [...state.transaction]
+        ...state, transaction: [...state.transaction, action.transaction]
       };
+    default:
+      return { ...state };
   }
 }

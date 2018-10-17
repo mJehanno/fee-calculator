@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { AddTransaction } from '../../+state/transaction-action';
@@ -20,21 +20,22 @@ export class FormComponent implements OnInit {
   @Input()
   errorMessage: string;
 
-  feeForm = this.fb.group({
-    label: ['', Validators.required],
-    amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
-    type: ['', Validators.required]
-  });
+  feeForm: FormGroup;
 
   ngOnInit() {
+    this.feeForm = this.fb.group({
+      label: ['', Validators.required],
+      amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      type: ['', Validators.required]
+    });
   }
 
   addFee() {
     if (this.feeForm.invalid) {
       this.snackbar.open(this.errorMessage, 'Undo');
     } else {
-      localStorage.setItem(this.feeForm.value.label, JSON.stringify({ amount: this.feeForm.value.amount, type: this.feeForm.value.type }));
       this.store.dispatch(new AddTransaction(this.feeForm.value));
+      this.feeForm.reset();
     }
   }
 
