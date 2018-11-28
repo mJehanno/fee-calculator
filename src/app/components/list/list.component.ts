@@ -6,6 +6,7 @@ import { TransactionState } from '../../+state/transaction-reducer';
 
 import { transactionQuery } from '../../+state/transaction-selector';
 import { MatTableDataSource } from '@angular/material';
+import { ClearTransaction } from '../../+state/transaction-action';
 
 @Component({
   selector: 'app-list',
@@ -44,5 +45,10 @@ export class ListComponent implements OnInit {
       return 0;
     }
 
+  }
+
+
+  clearTable() {
+    this.store.dispatch(new ClearTransaction());
   }
 }

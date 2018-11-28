@@ -1,13 +1,25 @@
-table {
-  width: 60%;
-  margin: 3em auto;
- 
-  .mat-footer-cell, .mat-header-cell {
-    font-weight: bold;
+:host {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3em;
   }
 
-  .mat-header-cell {
-    font-size: 20px;
-  }
+  table {
+    width: 60%;
+    margin: 0 auto;
 
+    .mat-footer-cell,
+    .mat-header-cell {
+      font-weight: bold;
+    }
+
+    .mat-header-cell {
+      font-size: 20px;
+    }
+  }
 }
