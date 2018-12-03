@@ -14,40 +14,48 @@ import { ClearTransaction } from '../../+state/transaction-action';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
   transactions: Transaction[] = [];
-  test: Observable<Transaction[]>;
+  transactions$: Observable<Transaction[]>;
   dataSource: MatTableDataSource<Transaction>;
   displayColumns = ['Label', 'Type', 'Amount'];
 
   constructor(private store: Store<TransactionState>) {
-    this.test = store.pipe(select(transactionQuery.getTransactions));
-    this.test.subscribe((transactions) => {
+    this.transactions$ = store.pipe(select(transactionQuery.getTransactions));
+    this.transactions$.subscribe(transactions => {
       this.transactions = transactions;
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  /**
+   * * function made to calculate de final amount in the table.
+   * * it first filter the array on credit transaction, then on debit transaction.
+   * * then it sums both filtered arrays to finaly substract debit sum to credit one.
+   */
   calculamount() {
     if (this.transactions.length !== 0) {
-      const credit = this.transactions.filter(transaction =>
-        transaction.type === 'credit'
+      const credit = this.transactions.filter(
+        transaction => transaction.type === 'credit'
       );
-      const debit = this.transactions.filter(transaction =>
-        transaction.type === 'debit'
+      const debit = this.transactions.filter(
+        transaction => transaction.type === 'debit'
       );
-      const totalCredit = credit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
-      const totalDebit = debit.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+      const totalCredit = credit
+        .map(t => t.amount)
+        .reduce((acc, value) => acc + value, 0);
+      const totalDebit = debit
+        .map(t => t.amount)
+        .reduce((acc, value) => acc + value, 0);
       return totalCredit - totalDebit;
     } else {
       return 0;
     }
-
   }
 
-
+  /**
+   * * This function is called by the clear button, it dispatch a new ClearTransaction Action to our Store
+   */
   clearTable() {
     this.store.dispatch(new ClearTransaction());
   }

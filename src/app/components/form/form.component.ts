@@ -11,11 +11,11 @@ import { TransactionState } from '../../+state/transaction-reducer';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
-
-  constructor(private fb: FormBuilder, public snackbar: MatSnackBar, private store: Store<TransactionState>) {
-
-  }
+  constructor(
+    private fb: FormBuilder,
+    public snackbar: MatSnackBar,
+    private store: Store<TransactionState>
+  ) {}
 
   @Input()
   errorMessage: string;
@@ -25,11 +25,17 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     this.feeForm = this.fb.group({
       label: ['', Validators.required],
-      amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      amount: [
+        '',
+        Validators.compose([Validators.required, Validators.min(0)])
+      ],
       type: ['', Validators.required]
     });
   }
 
+  /**
+   * * this function dispatch a AddTransaction Action to the Store with the form value.
+   */
   addFee() {
     if (this.feeForm.invalid) {
       this.snackbar.open(this.errorMessage, 'Undo');
@@ -38,5 +44,4 @@ export class FormComponent implements OnInit {
       this.feeForm.reset();
     }
   }
-
 }
